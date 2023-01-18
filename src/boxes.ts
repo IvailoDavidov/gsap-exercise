@@ -27,10 +27,33 @@ gsap.set(square4, { pixi: { x: 700, y: 300 } });
 app.stage.addChild(square1, square2, square3, square4);
 
 //animations
-gsap.to(square1, { pixi: {rotation: 360}, duration:2, delay:1 });
-gsap.to(square2, { pixi: {blur:10}, duration:2, delay:1 });
-gsap.to(square3, { pixi: {skewX: 50}, duration:2, delay:1 });
-gsap.to(square4, { pixi: {tint: 0xff0000}, duration:2, delay:1 });
+const square1Anim = gsap.to(square1, { pixi: { rotation: 360 }, duration: 1, paused: true });
+const square2Anim = gsap.to(square2, { pixi: { blur: 10 }, duration: 1, paused: true });
+const square3Anim = gsap.to(square3, { pixi: { skewX: 50 }, duration: 1, paused: true });
+const square4Anim = gsap.to(square4, { pixi: { tint: 0xff0000 }, duration: 1, paused: true });
+
+//addEvents
+square1.interactive = true;
+square2.interactive = true;
+square3.interactive = true;
+square4.interactive = true;
+
+addEvent(square1, 'pointertap', square1Anim);
+addEvent(square2, 'pointertap', square2Anim);
+addEvent(square3, 'pointertap', square3Anim);
+addEvent(square4, 'pointertap', square4Anim);
+
+
+
+function addEvent(element: PIXI.Graphics, event: any, animaion: GSAPAnimation) {
+    element.on(event, () => {
+        if (animaion.paused()) {
+            animaion.play();
+        }else{
+            animaion.reverse();         
+        }
+    })
+}
 
 
 function createSquare(x: number, y: number, w: number, h: number) {
