@@ -15,13 +15,12 @@ const app = new PIXI.Application({
 document.body.appendChild(app.view as HTMLCanvasElement);
 
 const circle1 = createCircle(0, 0, 50);
-circle1.position.set(100,100);
-
 const circle2 = createCircle(0, 0, 50);
-circle2.position.set(100,300);
-
 const circle3 = createCircle(0, 0, 50);
-circle3.position.set(100,500);
+
+gsap.set(circle1, { pixi: { x: 100, y: 100 } });
+gsap.set(circle2, { pixi: { x: 100, y: 300 } });
+gsap.set(circle3, { pixi: { x: 100, y: 500 } });
 
 app.stage.addChild(circle1, circle2, circle3);
 
@@ -45,7 +44,7 @@ gsap.to(circle3.scale, { x: 1, y: 1, duration: 1, delay: 2, ease: Bounce.easeIn 
 function createCircle(x: number, y: number, r: number) {
     const circle = new PIXI.Graphics();
     circle.beginFill(0x000000);
-    circle.drawCircle(x, y, 50);
+    circle.drawCircle(x, y, r);
     circle.endFill();
     return circle;
 }
